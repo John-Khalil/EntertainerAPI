@@ -1,4 +1,4 @@
-import express, { json } from "express";
+import express, { json, response } from "express";
 import cors from "cors";
 
 const app = express();
@@ -10,29 +10,62 @@ app.get("/", (req, res) => res.send("Hello World45!"));
 app.post("*",(req,res)=>{
 
   console.log(req.body)
+
+  // response envelope 
   
-  return res.send(JSON.stringify([
+  return res.send(JSON.stringify(
     {
-      status:"success",
-      customerId:[
-        120000456,
-        120000457,
-        120000458,
-        120000459,
-        120000460
-      ]
-    },
-    {
-      status:"failure",
-      customerId:[
-        120000456,
-        120000457,
-        120000458,
-        120000459,
-        120000460
-      ]
+        "status": 0,
+        "message": "success",
+        "responseMap": null,
+        "campaignBonus": [
+            {
+                "status": "failure",
+                "customerIds": [
+                    "1200009039",
+                    "9999999",
+                    "12121212"
+                ],
+                "message": "Customer doesn't exist"
+            },
+            {
+                "status": "success",
+                "customerIds": [
+                    "444422322"
+                ]
+            }
+        ]
     }
-  ]))
+  ))
+
+
+  // return res.send(JSON.stringify(
+  //     {
+  //         "errors": [
+  //           {
+  //             "message": "Request with the same reference number cannot be processed again"
+  //           }
+  //         ],
+  //         "status": 1
+  //     }
+  // ))
+  
+  // return res.send(JSON.stringify(
+  //     {
+  //         "errors": [
+  //           {
+  //             "fieldName": "expiryValidity",
+  //             "message": "Field cannot be empty."
+  //           }
+  //         ],
+  //         "status": 1
+  //     }
+  // ))
+
+
 })
+
+
+
 
 export default app;
